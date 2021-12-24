@@ -36,3 +36,59 @@
     transform: rotate(360deg);
   }
 }
+.img-container{
+  height:400px;
+  width:320px;
+  object-fit: cover;
+  margin-top: 0px;
+}
+/* .card-container{
+  height:max-content;
+  width: max-content;
+
+} */
+.user-container{
+ height: max-content;
+ width: max-content;
+ margin-left: 500px;
+margin-bottom: 40px;
+margin-top: 0px;
+display: flex;
+gap:30px;
+color:wheat;
+border-radius: 10px;
+justify-content: space-around;
+margin-left: 200px;
+}
+.details-container{
+  margin-top: 80px;
+  margin-left: 50px;
+  margin-right: 20px;
+  background-color:whitesmoke;
+}
+body{
+  background-color: whitesmoke;
+}
+.user-container:hover{
+  transform: scale(1.1);
+}
+
+.add-user{
+display: flex;
+flex-direction: column;
+width:400px;
+margin-left: 1000px;
+
+
+}
+.add-button{
+  margin-top: 1000px;
+}
+.front{
+  margin-right: 850px;
+}
+.community{
+  margin-right: 800px;
+  margin-top: 20px;
+ font-size: 20px;
+}
