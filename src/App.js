@@ -182,10 +182,7 @@ return(
      {deleteButton}
      {editButton}
    
-     <button onClick={()=>{
-       history.push("/users/"+id);
-     }}
-     >push</button>
+    
    
      </div>
      </Card>
