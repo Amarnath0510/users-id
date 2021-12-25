@@ -3,9 +3,18 @@ import './App.css';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
+//  import DeleteIcon from '@mui/icons-material/Delete'
+ 
+ import IconButton from '@mui/material/IconButton';
+ import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
+import { useHistory,useParams } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
+import { EditUsers } from './EditUsers';
+// import { Users } from './Users';
  function App() {
+  
   const INITIAL_USERS=[{
   name:"Username:Amarnath",
   place:"Place:Vadalur",
@@ -43,12 +52,14 @@ import { useState } from 'react';
       ambition:"Ambition:Astronaut",
       age:"Age:35",
        }];
+       
+      
        const[name,setName]=useState("");
        const[picture,setPicture]=useState("");
        const[place,setPlace]=useState("");
-       const[ambition,setAmbition]=useState("");
+       const[ambition,setAmbition]  =useState("");
        const[age,setAge]=useState("");
-       const[users,setUsers]=useState(INITIAL_USERS);
+       const [users,setUsers]=useState(INITIAL_USERS);
        
        const addUser=()=>{
          console.log("Adding Users",name,picture,place,ambition,age);
@@ -62,95 +73,179 @@ import { useState } from 'react';
          console.log(newUser);
          setUsers([...users,newUser])
        };
+     
+        
+ 
       
   return (
-    <div className="App  ">  
-    <div>
-    <h1 className="front">Hello All !!! Welcome to USers Page</h1>
-    <p className="community">A community to add new users👨🏽‍🤝‍👨🏽👨🏽‍🤝‍👨🏽</p>
-    </div>
-   <div className="add-user">
-   
-   <TextField 
-   value={name}
-   onChange={(event)=>setName(event.target.value)}
- placeholder="Enter Your Name"
-variant="standard" />
+    <div className="App  "> 
+    <nav>
 
-     <TextField 
-      value={picture}
-    onChange={(event)=>setPicture(event.target.value)}
-    placeholder="Enter Your Picture"
-    variant="standard"
-    />
-    <TextField
-    value={place}
-    onChange={(event)=>setPlace(event.target.value)}
-    placeholder="Enter Your Place"
-    variant="standard"
-    />
-    <TextField
-    value={ambition}
-    onChange={(event)=>setAmbition(event.target.value)}
-    placeholder="Enter Your Ambition"
-    variant="standard"
-    />
-    <TextField
-    value={age}
-    onChange={(event)=>setAge(event.target.value)}
-    placeholder="Enter Your Age"
-    variant="standard"
-    />
-    
-    <Button className="add-button" onClick={addUser} variant="outlined">Add User</Button>
-   
-</div>
+    <Link to="/home">
+    Home
+    </Link>
 
-   
-  <UsersList users={users}/>   
+    <Link to="/users">
+    Users
+    </Link>
+   </nav>
   
-    </div>
-  );
+   <Route path="/home">
+   <Home/>
+   </Route>
+   <Route  path="/users/edit/:id">
+   <EditUsers/>
+   </Route>
+    <div className="add-user">
+   
+    <TextField 
+    value={name}
+    onChange={(event)=>setName(event.target.value)}
+  placeholder="Enter Your Name"
+  variant="standard" />
+  
+      <TextField 
+       value={picture}
+     onChange={(event)=>setPicture(event.target.value)}
+     placeholder="Enter Your Picture"
+     variant="standard"
+     />
+     <TextField
+     value={place}
+     onChange={(event)=>setPlace(event.target.value)}
+     placeholder="Enter Your Place"
+     variant="standard"
+     />
+     <TextField
+     value={ambition}
+     onChange={(event)=>setAmbition(event.target.value)}
+     placeholder="Enter Your Ambition"
+     variant="standard"
+     />
+     <TextField
+     value={age}
+     onChange={(event)=>setAge(event.target.value)}
+     placeholder="Enter Your Age"
+     variant="standard"
+     />
+     
+     <Button className="add-button" onClick={addUser} variant="outlined">Add User</Button>
+    
+  </div>
+  <Route exact path="/users/:id">
+  <UserDetails users={users}/>
+  </Route>
+ 
+  <Route exact path="/users">
+  <UsersList users={users} setUsers={setUsers}/>
+  </Route>
+  
+   
+  </div>
+ 
+    
+  )
+    
 }
-
-
-function Users({name,place,picture,ambition,age}){
+function UserDetails({users}){
+  const{id}=useParams();
+  const user=users[id];
+  console.log(user);
   return(
-    
-  
-    <Card  className="user-container">
-   <img  className="img-container"src={picture} alt={name}/>
-   <div className="details-container">
-    <p>{name}</p>
-    <p>{place}</p>
-    <p>{ambition}</p>
-    <p>{age}</p>
-    </div>
-    </Card>
-    
-
+  <h1>User Details{user.name}</h1>
   )
 }
+function Home(){
+return(
+  <div className="home">
+  <h1 className="front">Hello All !!! Welcome to USers Page</h1>
+    <p className="community">A community to add new users👨🏽‍🤝‍👨🏽👨🏽‍🤝‍👨🏽</p>
+
+  </div>
+)
+}
+  
 
 
 
-function UsersList({users}){
+ function Users({name,place,picture,ambition,age,id,deleteButton,editButton}){
+  const history=useHistory();
+ 
+   return(
+    
+  
+     <Card  className="user-container">
+    <img  className="img-container"src={picture} alt={name}/>
+    <div className="details-container">
+     <p>{name}</p>
+     <p>{place}</p>
+     <p>{ambition}</p>
+     <p>{age}</p>
+     {deleteButton}
+     {editButton}
+   
+     <button onClick={()=>{
+       history.push("/users/"+id);
+     }}
+     >push</button>
+   
+     </div>
+     </Card>
+    
+
+   )
+ }
+function UsersList({users,setUsers}){
+ const history=useHistory("");
 return(
   
   
   <div>
-  {users.map((ur)=>(
+  {users.map(({name,picture,place,ambition,age},index)=>(
       
     <Users
-    picture={ur.picture}
-    name={ur.name}
-   place={ur.place}
-   ambition={ur.ambition}
-   age={ur.age}
-   />
-  ))}
-  </div>
-)
-}
+    picture={picture}
+    name={name}
+   place={place}
+   ambition={ambition}
+   age={age}
+   id={index}
+ deleteButton={  <IconButton 
+  onClick={()=>{
+    console.log("Deleting",index);
+    const deleteIdx=index;
+   const remainingUsers= users.filter((ur,idx)=>idx!==deleteIdx);
+   console.log("Remaining",remainingUsers);
+   setUsers(remainingUsers);
+   
+  }}
+  aria-label="delete" color="error">
+  <DeleteIcon />
+</IconButton>
+  }
+  editButton={  <IconButton   
+    onClick={()=>history.push("/users/edit"+index)}
+    aria-label="edit" color="secondary">
+  < EditIcon />
+</IconButton>
+  } 
 
+    />
+  ))}
+  
+ 
+  
+ 
+   
+  
+ 
+
+   
+
+   
+ 
+  </div>
+  )
+
+}
 export default App;
