@@ -1,10 +1,8 @@
-// import logo from './logo.svg';
+
 import './App.css';
 import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-//  import DeleteIcon from '@mui/icons-material/Delete'
- 
  import IconButton from '@mui/material/IconButton';
  import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -12,7 +10,7 @@ import { useState } from 'react';
 import { useHistory,useParams } from "react-router-dom";
 import { Switch, Route, Link } from "react-router-dom";
 import { EditUsers } from './EditUsers';
-// import { Users } from './Users';
+
  function App() {
   
   const INITIAL_USERS=[{
@@ -89,14 +87,8 @@ import { EditUsers } from './EditUsers';
     Users
     </Link>
    </nav>
-  
-   <Route path="/home">
-   <Home/>
-   </Route>
-   <Route  path="/users/edit/:id">
-   <EditUsers/>
-   </Route>
-    <div className="add-user">
+   
+   <div className="add-user">
    
     <TextField 
     value={name}
@@ -132,16 +124,22 @@ import { EditUsers } from './EditUsers';
      <Button className="add-button" onClick={addUser} variant="outlined">Add User</Button>
     
   </div>
-  <Route exact path="/users/:id">
-  <UserDetails users={users}/>
+  <Switch>
+  <Route path="/home">
+  <Home/>
   </Route>
- 
-  <Route exact path="/users">
-  <UsersList users={users} setUsers={setUsers}/>
-  </Route>
+    <Route  path="/users/edit/:id">
+    <EditUsers/>
+    </Route>
+    <Route exact path="/users/:id">
+    <UserDetails users={users}/>
+    </Route>
   
-   
-  </div>
+    <Route exact path="/users">
+    <UsersList users={users} setUsers={setUsers}/>
+    </Route>
+    </Switch>
+</div>
  
     
   )
@@ -159,7 +157,7 @@ function Home(){
 return(
   <div className="home">
   <h1 className="front">Hello All !!! Welcome to USers Page</h1>
-    <p className="community">A community to add new users👨🏽‍🤝‍👨🏽👨🏽‍🤝‍👨🏽</p>
+    <p className="community">A community to add new users,delete and edit users👨🏽‍🤝‍👨🏽👨🏽‍🤝‍👨🏽</p>
 
   </div>
 )
@@ -200,10 +198,11 @@ function UsersList({users,setUsers}){
 return(
   
   
-  <div>
+  <div >
   {users.map(({name,picture,place,ambition,age},index)=>(
       
     <Users
+    key={index}
     picture={picture}
     name={name}
    place={place}
@@ -231,18 +230,7 @@ return(
   } 
 
     />
-  ))}
-  
- 
-  
- 
-   
-  
- 
-
-   
-
-   
+  ))} 
  
   </div>
   )
