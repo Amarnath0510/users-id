@@ -149,9 +149,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
     <Route exact path="/users">
     <UsersList users={users} setUsers={setUsers}/>
     </Route>
-    <Route path="**">
-    <NotFound/>
-    </Route>
+    
     </Switch>
 </div>
 
@@ -159,13 +157,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
   )
     
 }
-function   NotFound() {
-  return(
-    <div>
-    <img src="https://kfg6bckb.media.zestyio.com/yalantis-interactive-404.gif" alt="not found 404" className='notfound'/>
-    </div>
-  )
-}
+
 function UserDetails({users}){
   const{id}=useParams();
   const user=users[id];
