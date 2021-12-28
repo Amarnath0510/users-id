@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
  import IconButton from '@mui/material/IconButton';
- import EditIcon from '@mui/icons-material/Edit';
+ 
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from 'react';
 import { useHistory,useParams } from "react-router-dom";
@@ -188,7 +188,7 @@ return(
 
 
  function Users({name,place,picture,ambition,age,id,deleteButton,editButton}){
- const history=useHistory();
+//  const history=useHistory();
  
    return(
     
@@ -212,7 +212,7 @@ return(
    )
  }
 function UsersList({users,setUsers}){
- const history=useHistory("");
+//  const history=useHistory("");
 return(
   
   
